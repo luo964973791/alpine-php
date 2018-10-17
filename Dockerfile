@@ -20,7 +20,4 @@ RUN apk update \
     && docker-php-ext-install iconv \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install sockets \
-    && docker-php-ext-install shmop \
-    && docker-php-ext-install pcntl \
-    && docker-php-ext-install soap \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
