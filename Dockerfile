@@ -17,7 +17,10 @@ RUN apk update \
     && docker-php-ext-install -j${NPROC} gd zip \
     && docker-php-ext-install iconv \
     && docker-php-ext-install bcmath \
-    && docker-php-ext-install sockets
+    && docker-php-ext-install sockets \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com
     #&& docker-php-ext-enable gd \
     #&& docker-php-ext-enable zip \ 
     #&& apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
