@@ -1,16 +1,27 @@
-FROM php:alpine
-RUN echo -e "http://mirrors.aliyun.com/alpine/latest-stable/main\nhttp://mirrors.aliyun.com/alpine/latest-stable/community" > /etc/apk/repositories \
-    && cd /usr/local/bin \
-    && apk add build-base shadow openssh bash libxml2-dev openssl-dev libjpeg-turbo-dev libpng-dev libxpm-dev freetype-dev gd-dev gettext-dev libmcrypt-dev binutils libmcrypt libjpeg libjpeg-turbo-dev \
-    && ./docker-php-ext-install redis \
+FROM daocloud.io/library/php:7.2.9-fpm-alpine
+RUN echo -e "http://mirrors.aliyun.com/alpine/latest-stable/main\nhttp://mirrors.aliyun.com/alpine/latest-stable/community" > /etc/apk/repositories
+RUN apk update \
+    && apk upgrade \
+    && apk add tzdata \
+    && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo Asia/Shanghai> /etc/timezone \
+    && docker-php-ext-install mbstring opcache pdo pdo_mysql mysqli \
+    && apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+    && docker-php-ext-configure gd \
+    --with-gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/ \
+    --with-zlib-dir=/usr \
+    && NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+    && docker-php-ext-install -j${NPROC} gd zip \
+    && docker-php-ext-enable gd \
+    && docker-php-ext-enable zip \ 
     && ./docker-php-ext-install iconv \
-    && ./docker-php-ext-install pdo_mysql \
     && ./docker-php-ext-install bcmath \
     && ./docker-php-ext-install sockets \
-    && ./docker-php-ext-install mysqli \
     && ./docker-php-ext-install shmop \
-    && ./docker-php-ext-install gd \
     && ./docker-php-ext-install pcntl \
     && ./docker-php-ext-install soap \
-    && ./docker-php-ext-install zip \
-    && ./docker-php-ext-install xmlrpc
+    && ./docker-php-ext-install xmlrpc \
+    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
