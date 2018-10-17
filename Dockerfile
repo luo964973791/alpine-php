@@ -23,5 +23,4 @@ RUN apk update \
     && docker-php-ext-install shmop \
     && docker-php-ext-install pcntl \
     && docker-php-ext-install soap \
-    && docker-php-ext-install xmlrpc \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
