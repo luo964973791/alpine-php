@@ -35,10 +35,10 @@ RUN apk update \
     && mkdir -p /usr/src/php/ext \
     && mv $MEMCACHED_VER /usr/src/php/ext/memcached \
     && docker-php-ext-install memcached \
-    && rm -rf /usr/src/php \
-    && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com 
+    && rm -rf /usr/src/php 
+    #&& curl -sS https://getcomposer.org/installer | php \
+    #&& mv composer.phar /usr/local/bin/composer \
+    #&& composer config -g repo.packagist composer https://packagist.phpcomposer.com 
     
     #&& docker-php-ext-enable gd \
     #&& docker-php-ext-enable zip \ 
