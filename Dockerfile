@@ -35,11 +35,11 @@ RUN apk update \
     && mkdir -p /usr/src/php/ext \
     && mv $MEMCACHED_VER /usr/src/php/ext/memcached \
     && docker-php-ext-install memcached \
-    && rm -rf /usr/src/php 
-    #&& curl -sS https://getcomposer.org/installer | php \
-    #&& mv composer.phar /usr/local/bin/composer \
-    #&& composer config -g repo.packagist composer https://packagist.phpcomposer.com 
-    
-    #&& docker-php-ext-enable gd \
-    #&& docker-php-ext-enable zip \ 
-    #&& apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+    && rm -rf /usr/src/php \
+    && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+    && chmod 755 composer-setup.php \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
