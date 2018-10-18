@@ -1,4 +1,5 @@
 FROM daocloud.io/library/php:7.2.9-fpm-alpine
+ENV REDIS_VER redis-4.1.1
 RUN echo -e "http://mirrors.aliyun.com/alpine/latest-stable/main\nhttp://mirrors.aliyun.com/alpine/latest-stable/community" > /etc/apk/repositories
 RUN apk update \
     && apk upgrade \
@@ -18,9 +19,18 @@ RUN apk update \
     && docker-php-ext-install iconv \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install sockets \
+    && wget http://pecl.php.net/get/$REDIS_VER.tgz \
+    && tar zxvf $REDIS_VER.tgz \
+    && mkdir -p /usr/src/php/ext \
+    && rm -rf $REDIS_VER.tgz \
+    && rm -rf package.xml \
+    && mv $REDIS_VER /usr/src/php/ext/redis \
+    && docker-php-ext-install redis \
+    && rm -rf /usr/src/php \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com 
+    
     #&& docker-php-ext-enable gd \
     #&& docker-php-ext-enable zip \ 
     #&& apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
