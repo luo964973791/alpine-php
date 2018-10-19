@@ -8,7 +8,7 @@ RUN apk update \
     && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo Asia/Shanghai> /etc/timezone \
     && docker-php-ext-install mbstring opcache pdo pdo_mysql mysqli \
-    && apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libmemcached libmemcached-libs zlib zlib-dev libmemcached-dev cyrus-sasl-dev \
+    && apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libmemcached libmemcached-libs zlib zlib-dev libmemcached-dev cyrus-sasl-dev libxml2-dev libxslt-dev \
     && docker-php-ext-configure gd \
     --with-gd \
     --with-freetype-dir=/usr/include/ \
