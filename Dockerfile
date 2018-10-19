@@ -20,6 +20,11 @@ RUN apk update \
     && docker-php-ext-install iconv \
     && docker-php-ext-install bcmath \
     && docker-php-ext-install sockets \
+    && docker-php-ext-install xmlrpc \
+    && docker-php-ext-install xsl \
+    && docker-php-ext-install sysvsem \
+    && docker-php-ext-install soap \
+    && docker-php-ext-install shmop \
     && wget http://pecl.php.net/get/$REDIS_VER.tgz \
     && tar zxvf $REDIS_VER.tgz \
     && mkdir -p /usr/src/php/ext \
