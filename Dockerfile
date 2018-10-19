@@ -8,7 +8,7 @@ RUN apk update \
     && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo Asia/Shanghai> /etc/timezone \
     && docker-php-ext-install mbstring opcache pdo pdo_mysql mysqli \
-    && apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libmemcached libmemcached-libs zlib zlib-dev libmemcached-dev cyrus-sasl-dev libxml2-dev libxslt-dev openssl-dev libffi-dev zlib-dev \
+    && apk add --no-cache gd-dev gettext-dev freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev libmemcached libmemcached-libs zlib zlib-dev libmemcached-dev cyrus-sasl-dev libxml2-dev libxslt-dev openssl-dev libffi-dev zlib-dev \
     && docker-php-ext-configure gd \
     --with-gd \
     --with-freetype-dir=/usr/include/ \
@@ -24,6 +24,7 @@ RUN apk update \
     && docker-php-ext-install xsl \
     && docker-php-ext-install sysvsem \
     && docker-php-ext-install soap \
+    && docker-php-ext-install gettext \
     && docker-php-ext-install shmop \
     && wget http://pecl.php.net/get/$REDIS_VER.tgz \
     && tar zxvf $REDIS_VER.tgz \
