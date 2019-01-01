@@ -1,4 +1,4 @@
-FROM daocloud.io/library/php:7.2.9-fpm-alpine
+FROM daocloud.io/library/php:7.3.0-fpm-alpine
 ENV REDIS_VER redis-4.1.1
 ENV MEMCACHED_VER memcached-3.0.4
 RUN echo -e "http://mirrors.aliyun.com/alpine/latest-stable/main\nhttp://mirrors.aliyun.com/alpine/latest-stable/community" > /etc/apk/repositories
