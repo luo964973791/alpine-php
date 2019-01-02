@@ -1,6 +1,6 @@
 FROM daocloud.io/library/php:7.3.0-fpm-alpine
 ENV REDIS_VER redis-4.1.1
-ENV MEMCACHED_VER memcached-3.0.4
+ENV MEMCACHED_VER memcached-3.1.3
 RUN echo -e "http://mirrors.aliyun.com/alpine/latest-stable/main\nhttp://mirrors.aliyun.com/alpine/latest-stable/community" > /etc/apk/repositories
 RUN apk update \
     && apk upgrade \
@@ -41,6 +41,7 @@ RUN apk update \
     && rm -rf package.xml \
     && mkdir -p /usr/src/php/ext \
     && mv $MEMCACHED_VER /usr/src/php/ext/memcached \
+    && cd /usr/src/php/ext/memcached \
     && docker-php-ext-install memcached \
     && rm -rf /usr/src/php \
     && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
