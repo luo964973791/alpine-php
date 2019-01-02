@@ -35,6 +35,12 @@ RUN apk update \
     && mv $REDIS_VER /usr/src/php/ext/redis \
     && docker-php-ext-install redis \
     && rm -rf /usr/src/php \
+    && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+    && chmod 755 composer-setup.php \
+    && php composer-setup.php \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && wget http://pecl.php.net/get/$MEMCACHED_VER.tgz \
     && tar zxvf $MEMCACHED_VER.tgz \
     && rm -rf $MEMCACHED_VER.tgz \
@@ -44,10 +50,4 @@ RUN apk update \
     && cd /usr/src/php/ext/memcached \
     && docker-php-ext-install memcached \
     && rm -rf /usr/src/php \
-    && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
-    && chmod 755 composer-setup.php \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
