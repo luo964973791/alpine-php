@@ -35,6 +35,7 @@ RUN apk update \
     && mv $REDIS_VER /usr/src/php/ext/redis \
     && docker-php-ext-install redis \
     && rm -rf /usr/src/php \
+    && docker-php-ext-enable redis \
     && php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
     && chmod 755 composer-setup.php \
     && php composer-setup.php \
